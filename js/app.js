@@ -9,6 +9,12 @@ const displayPhones = phones => {
     // console.log(phones);
     const phonesContainer = document.getElementById('phone-container');
     phonesContainer.textContent = '';
+
+
+    // display 20 phones only
+    phones = phones.slice(0,20);
+
+    
     phones.forEach(phone => {
         const phoneDiv = document.createElement('div');
         phoneDiv.classList.add('col');
