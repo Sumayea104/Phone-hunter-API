@@ -1,22 +1,23 @@
-const loadPhones = async() =>{
-    const url = `https://openapi.programming-hero.com/api/phones?search=iphone`
+const loadPhones = async(searchText) => {
+    const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`
     const res = await fetch(url);
     const data = await res.json();
     displayPhones(data.data);
 }
 
-const displayPhones = phones =>{
+const displayPhones = phones => {
     // console.log(phones);
     const phonesContainer = document.getElementById('phone-container');
+    phonesContainer.textContent = '';
     phones.forEach(phone => {
         const phoneDiv = document.createElement('div');
         phoneDiv.classList.add('col');
         phoneDiv.innerHTML = `
-        <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+        <div class="card p-4 m-4">
+            <img src="${phone.image}" class="card-img-top" alt="...">
+                <div class="card-body ">
+                    <h5 class="card-title">${phone.phone_name}</h5>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
                                 additional content. This content is a little bit longer.</p>
                             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         </div>
@@ -26,4 +27,14 @@ const displayPhones = phones =>{
         phonesContainer.appendChild(phoneDiv);
     });
 }
+
+document.getElementById('btn-search').addEventListener('click', function(){
+    const searchField = document.getElementById('search-field');
+    const searchText = searchField.value;
+    loadPhones(searchText);
+    
+})
+
+
+
 loadPhones();
