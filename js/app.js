@@ -12,9 +12,19 @@ const displayPhones = phones => {
 
 
     // display 20 phones only
-    phones = phones.slice(0,20);
+    phones = phones.slice(0, 6);
 
-    
+
+    // display no phones found
+
+    const noPhone = document.getElementById('no-found-massage');
+    if(phones.length === 0){
+        noPhone.classList.remove('d-none');
+    }
+else{
+    noPhone.classList.add('d-none');
+}
+    // display all phones
     phones.forEach(phone => {
         const phoneDiv = document.createElement('div');
         phoneDiv.classList.add('col');
