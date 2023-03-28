@@ -12,7 +12,7 @@ const displayPhones = phones => {
 
 
     // display 20 phones only
-    phones = phones.slice(0, 6);
+    phones = phones.slice(0, 8);
 
 
     // display no phones found
@@ -31,26 +31,39 @@ else{
         phoneDiv.innerHTML = `
         <div class="card p-4 m-4">
             <img src="${phone.image}" class="card-img-top" alt="...">
-                <div class="card-body ">
-                    <h5 class="card-title">${phone.phone_name}</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
+            <div class="card-body ">
+            <h5 class="card-title">${phone.phone_name}</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
         
         `;
         phonesContainer.appendChild(phoneDiv);
     });
-}
+    // stop spinner or loader
+    toggleSpinner(false);
 
+
+}
+// handel search button click
 document.getElementById('btn-search').addEventListener('click', function(){
+    // start loader
+    toggleSpinner(true);
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
     loadPhones(searchText);
     
 })
-
+const toggleSpinner = isLoading => {
+    const loaderSection = document.getElementById('loader');
+    if(isLoading){
+        loaderSection.classList.remove('d-none');
+    }
+    else{
+        loaderSection.classList.add('d-none');
+    }
+}
 
 
 loadPhones();
