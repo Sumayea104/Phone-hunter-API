@@ -39,10 +39,10 @@ const displayPhones = (phones, dataLimit) => {
         <div class="card p-4 m-4">
             <img src="${phone.image}" class="card-img-top" alt="...">
             <div class="card-body ">
-            <h5 class="card-title">${phone.phone_name}</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-            
+                <h5 class="card-title">${phone.phone_name}</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                <button onclick='loadPhoneDetails('${phone.slug}')' class="btn btn-primary">Show Details</button>
             </div>
         </div>
         
@@ -51,7 +51,7 @@ const displayPhones = (phones, dataLimit) => {
     });
     // stop spinner or loader
     toggleSpinner(false);
-}
+};
 
 
 const processSearch = (dataLimit) =>{
@@ -59,7 +59,7 @@ const processSearch = (dataLimit) =>{
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
     loadPhones(searchText, dataLimit);
-}
+};
 // handel search button click
 document.getElementById('btn-search').addEventListener('click', function(){
     // start loader
@@ -69,7 +69,16 @@ document.getElementById('btn-search').addEventListener('click', function(){
     // loadPhones(searchText);
     processSearch(10);
     
+});
+// search input field enter key handler
+document.getElementById('search-field').addEventListener('keypress',function(e){
+    if (e.key === 'enter'){
+        // code for enter
+        processSearch(10);
+    }
 })
+
+
 const toggleSpinner = isLoading => {
     const loaderSection = document.getElementById('loader');
     if(isLoading){
@@ -78,15 +87,23 @@ const toggleSpinner = isLoading => {
     else{
         loaderSection.classList.add('d-none');
     }
-}
+};
 // not the best way to load show all
 document.getElementById('btn-show-all').addEventListener('click', function(){
-    toggleSpinner(true);
-    const searchField = document.getElementById('search-field');
-    const searchText = searchField.value;
-    loadPhones(searchText);
+    // toggleSpinner(true);
+    // const searchField = document.getElementById('search-field');
+    // const searchText = searchField.value;
+    // loadPhones(searchText);
     processSearch();
 })
+
+const loadPhoneDetails = async id =>{
+    const url = `https://openapi.programming-hero.com/api/phone/${id}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log(data.data);
+}
+
 
 
 loadPhones();
